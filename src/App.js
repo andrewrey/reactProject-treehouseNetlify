@@ -26,13 +26,23 @@ export default class App extends Component {
       .catch((error) => console.log("Error fetching and parsing data...", error));
   }
 
+  performSearch = (searchTerms) => {
+    Axios.get(`http://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_GIF_API}&q=${searchTerms}`)
+      .then((response) =>
+        this.setState({
+          gifs: response.data.data,
+        })
+      )
+      .catch((error) => console.log("Error fetching and parsing data...", error));
+  };
+
   render() {
     return (
       <div>
         <div className="main-header">
           <div className="inner">
             <h1 className="main-title">GifSearch</h1>
-            <SearchForm />
+            <SearchForm search={this.performSearch} />
           </div>
         </div>
         <div className="main-content">
