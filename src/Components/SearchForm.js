@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 
 export default class SearchForm extends Component {
-  state = {
-    searchText: "",
-  };
+  // state = {
+  //   searchText: "",
+  // };
 
-  onSearchChange = (e) => {
-    this.setState({ searchText: e.target.value });
-  };
+  // onSearchChange = (e) => {
+  //   this.setState({ searchText: e.target.value });
+  // };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.search(this.state.searchText);
+    this.props.search(this.searchValue.value);
     e.currentTarget.reset();
   };
 
@@ -21,7 +21,7 @@ export default class SearchForm extends Component {
         <label className="is-hidden" htmlFor="search">
           Search
         </label>
-        <input type="search" onChange={this.onSearchChange} name="search" placeholder="Search..." />
+        <input type="search" onChange={this.onSearchChange} name="search" placeholder="Search..." ref={(input) => (this.searchValue = input)} />
         <button type="submit" id="submit" className="search-button">
           <i className="material-icons icn-search">search</i>
         </button>

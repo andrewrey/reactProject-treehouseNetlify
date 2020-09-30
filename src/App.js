@@ -9,6 +9,7 @@ export default class App extends Component {
     super();
     this.state = {
       gifs: [],
+      loadingState: true,
     };
   }
 
@@ -17,20 +18,22 @@ export default class App extends Component {
     //   .then((response) => response.json())
     //   .then((data) => this.setState({ gifs: data.data }))
     //   .catch((error) => console.log("Error fetcing and parsing data...", error));
-    Axios.get(`http://api.giphy.com/v1/gifs/trending?api_key=${process.env.REACT_APP_GIF_API}`)
-      .then((response) =>
-        this.setState({
-          gifs: response.data.data,
-        })
-      )
-      .catch((error) => console.log("Error fetching and parsing data...", error));
+    // Axios.get(`http://api.giphy.com/v1/gifs/trending?api_key=${process.env.REACT_APP_GIF_API}`)
+    //   .then((response) =>
+    //     this.setState({
+    //       gifs: response.data.data,
+    //     })
+    //   )
+    //   .catch((error) => console.log("Error fetching and parsing data...", error));
+    this.performSearch();
   }
 
-  performSearch = (searchTerms) => {
+  performSearch = (searchTerms = "bears") => {
     Axios.get(`http://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_GIF_API}&q=${searchTerms}`)
       .then((response) =>
         this.setState({
           gifs: response.data.data,
+          loadingState: false,
         })
       )
       .catch((error) => console.log("Error fetching and parsing data...", error));
@@ -45,9 +48,7 @@ export default class App extends Component {
             <SearchForm search={this.performSearch} />
           </div>
         </div>
-        <div className="main-content">
-          <GifList data={this.state.gifs} />
-        </div>
+        <div className="main-content">{this.state.loadingState ? <p>Loading...</p> : <GifList data={this.state.gifs} />}</div>
       </div>
     );
   }
