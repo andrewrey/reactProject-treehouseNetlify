@@ -14,7 +14,8 @@ export default class App extends Component {
   componentDidMount() {
     fetch(`http://api.giphy.com/v1/gifs/trending?api_key=${process.env.REACT_APP_GIF_API}&q`)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => this.setState({ gifs: data.data }))
+      .catch((error) => console.log("Error fetcing and parsing data...", error));
   }
 
   render() {
