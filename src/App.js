@@ -18,7 +18,7 @@ export default class App extends Component {
   }
 
   performSearch = (searchTerms = "bears") => {
-    Axios.get(`http://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_GIF_API}&q=${searchTerms}`)
+    Axios.get(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_GIF_API}&q=${searchTerms}`)
       .then((response) =>
         this.setState({
           gifs: response.data.data,
